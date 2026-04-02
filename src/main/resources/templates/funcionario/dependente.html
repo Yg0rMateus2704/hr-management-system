@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dependentes</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<header>
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">App RH</a>
+    </nav>
+</header>
+
+<div class="container mt-4">
+
+    <h1>Informações do funcionário:</h1>
+
+    <p><b>Nome:</b> <span th:text="${funcionario.nome}"></span></p>
+    <p><b>Data de nascimento:</b> <span th:text="${funcionario.data}"></span></p>
+    <p><b>E-mail:</b> <span th:text="${funcionario.email}"></span></p>
+
+    <hr>
+
+    <h2>Cadastrar dependente</h2>
+
+    <form method="post" th:action="@{/dependentes/{id}(id=${funcionario.id})}">
+
+        <div class="form-group">
+            <label><b>Nome:</b></label>
+            <input type="text" name="nome" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label><b>CPF:</b></label>
+            <input type="text" name="cpf" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label><b>Data de nascimento:</b></label>
+            <input type="date" name="datanascimento" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-success">Adicionar Dependente</button>
+    </form>
+
+    <hr>
+
+    <h2>Dependentes:</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Data de nascimento</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="dependente : ${dependentes}">
+                <td th:text="${dependente.nome}"></td>
+                <td th:text="${dependente.cpf}"></td>
+                <td th:text="${dependente.datanascimento}"></td>
+
+                <td>
+                    <a th:href="@{/deletarDependente(cpf=${dependente.cpf})}">
+                        <button class="btn btn-danger btn-sm">Excluir</button>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/funcionarios" class="btn btn-secondary">Voltar</a>
+
+</div>
+
+<footer class="bg-dark text-center text-light py-2 fixed-bottom">
+    | App RH |
+</footer>
+
+</body>
+</html>
